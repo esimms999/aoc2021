@@ -6,6 +6,8 @@
 #   cat(str_replace_all(paste("condition(x == '", KEY[i], "', '", RESULT[i], "'),", "\n"), " ", ""))
 # }
 
+library(fmtr)
+
 fmt1 <- value(
   condition(x=='CH','CB'),
   condition(x=='HH','HN'),
@@ -26,7 +28,7 @@ fmt1 <- value(
 
 orig_string <- "NNCB"
 
-for (j in 1:10) {
+for (j in 1:15) {
   orig_string_length_less_one <- str_length(orig_string) - 1
   new_list <- vector("list", orig_string_length_less_one)
 
@@ -35,10 +37,9 @@ for (j in 1:10) {
     new_list[[i]] <- fapply(two_char, fmt1, 2)
   }
 
-  new_string <- str_c(paste(new_list, collapse = ""), str_sub(orig_string, i+1))
-  orig_string <- new_string
+  orig_string <- str_c(paste(new_list, collapse = ""), str_sub(orig_string, i+1))
 
-  if (j > 1) { rm(new_list, new_string) }
+  if (j > 1) { rm(new_list) }
   cat("End of loop j= ", j, "\n")
 }
 
